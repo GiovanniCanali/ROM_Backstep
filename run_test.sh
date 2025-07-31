@@ -44,7 +44,6 @@ for test_dir in test/*_grid; do
         cd "$test_dir" || { echo "Failed to enter $test_dir"; exit 1; }
 
         touch case.foam
-        echo
         echo -n "    Running simpleFoam in $test_dir..."
         simpleFoam > /dev/null 2>&1
         echo " done."

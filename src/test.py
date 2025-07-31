@@ -13,5 +13,5 @@ rel_error_pygem, rel_error_pod = relative_error(
 )
 
 # Print the mean of relative errors
-print(f"Mean Relative Error (PyGeM vs Foam): {rel_error_pygem.mean()}")
+print(f"\nMean Relative Error (PyGeM vs Foam): {rel_error_pygem.mean()}")
 print(f"Mean Relative Error (POD vs Foam): {rel_error_pod.mean()}")
