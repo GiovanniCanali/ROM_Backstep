@@ -35,7 +35,7 @@ cp test/points test/pygem_grid/constant/polyMesh/points
 echo " done."
 
 # Run the tests
-echo "Running the tests:"
+echo "Running the test simulations:"
 
 # Loop through all directories matching the pattern
 for test_dir in test/*_grid; do
@@ -58,7 +58,7 @@ done
 
 # Run the test script
 echo -n "Running the test script..."
-python src/test.py
+python src/test.py --pod_rank "$POD_RANK"
 echo " done."
 
 # Print completion message

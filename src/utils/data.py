@@ -23,8 +23,8 @@ def get_training_data():
 
     # Find all VTK files in the directory
     vtu_paths = glob(
-        f"{base_dir}/simulation_mu_*/VTK/simulation_mu_*_*/internal.vtu"
-        , recursive=True
+        f"{base_dir}/simulation_mu_*/VTK/simulation_mu_*_*/internal.vtu",
+        recursive=True,
     )
 
     # Loop through each VTK file
@@ -98,7 +98,7 @@ def get_test_data():
     return vel_magnitudes, mesh_points, sim_labels
 
 
-def get_mu(path="test"):
+def get_mu(path):
     """
     Get the mu parameter from the mesh_<mu>.png file in the test directory.
 

@@ -50,7 +50,7 @@ def plot_singular_values(vel, pts):
     plt.grid()
     plt.xlabel("Latent dimension")
     plt.ylabel("Singular value")
-    plt.savefig("test/singular_values.png")
+    plt.savefig("test/img/singular_values.png")
 
     # Compute the POD modes
     modes = pod.basis.detach().cpu().numpy()
@@ -65,7 +65,7 @@ def plot_singular_values(vel, pts):
         plt.ylabel("y")
         plt.axis("equal")
         plt.tight_layout()
-        plt.savefig(f"test/pod_mode_{i+1}.png")
+        plt.savefig(f"test/img/pod_mode_{i+1}.png")
 
 
 def plot_test(vel, pts, file):

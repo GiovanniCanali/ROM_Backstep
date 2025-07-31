@@ -15,7 +15,7 @@ def relative_error(vel_foam, vel_pygem, vel_pod):
     rel_error_pygem = np.abs(vel_pygem - vel_foam) / (np.abs(vel_foam) + 1e-13)
     rel_error_pod = np.abs(vel_pod - vel_foam) / (np.abs(vel_foam) + 1e-13)
 
-    return rel_error_pygem, rel_error_pod
+    return rel_error_pygem.mean(), rel_error_pod.mean()
 
 
 def split_by_label(vel, mesh, labels):

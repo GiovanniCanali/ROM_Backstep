@@ -21,9 +21,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--pod_rank", type=int, default=10)
 args = parser.parse_args()
 
-# Suppress warnings and create test directory if it doesn't exist
+# Suppress warnings and create directories if they don't exist
 warnings.filterwarnings("ignore")
 os.makedirs("test", exist_ok=True)
+os.makedirs("test/img", exist_ok=True)
 
 # Load data for each simulation
 vel, params, pts = get_training_data()
@@ -35,28 +36,37 @@ original_pts = mesh_to_numpy(file=path)
 # Compute and plot the singular values
 plot_singular_values(vel=vel, pts=original_pts)
 
-# Define the problem, initialize the POD-RBF and fit it
-problem = SupervisedProblem(input_=params, output_=vel)
-pod_rbf = PODRBF(pod_rank=args.pod_rank, rbf_kernel="thin_plate_spline")
-pod_rbf.fit(p=params, x=vel)
-
 # Compute the mesh corresponding to a random mu sampled from [-1, 1]
 random_mu = 2 * random.random() - 1
 compute_deformation(
     mu=random_mu,
     pts=original_pts,
-    img_dir="test",
+    img_dir="test/img",
     file="test/points",
     header_file=path,
 )
 
-# Reload the deformed mesh and make the prediction
+# Reload the deformed mesh
 test_mesh = mesh_to_numpy(file="test/points")
 mu_tensor = torch.tensor(random_mu, dtype=torch.float32).reshape(-1, 1)
-pred = pod_rbf(mu_tensor).detach().flatten().numpy()
 
-# Plot the predicted velocity magnitude for the random mu
-plot_test(vel=pred, pts=test_mesh, file="test/predicted_velocity.png")
+# Define the problem
+problem = SupervisedProblem(input_=params, output_=vel)
 
-# Save results to a file (param and velocity magnitude)
-np.savez(file="test/pod_results.npz", param=mu_tensor.numpy(), velocity=pred)
+# Loop over the rank values
+for rank in range(1, args.pod_rank + 1):
+
+    # Create the PODRBF model
+    pod_rbf = PODRBF(pod_rank=rank, rbf_kernel="thin_plate_spline")
+    pod_rbf.fit(p=params, x=vel)
+
+    # Make the prediction for the random mu
+    pred = pod_rbf(mu_tensor).detach().flatten().numpy()
+
+    # Plot the predicted velocity magnitude for the random mu
+    prediction_img = f"test/img/predicted_velocity_rank{rank}.png"
+    plot_test(vel=pred, pts=test_mesh, file=prediction_img)
+
+    # Save results to a file (param and velocity magnitude)
+    filename = f"test/pod_results_rank{rank}.npz"
+    np.savez(file=filename, param=mu_tensor.numpy(), velocity=pred)
