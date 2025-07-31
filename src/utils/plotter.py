@@ -3,7 +3,6 @@ from matplotlib import pyplot as plt
 import numpy as np
 import torch
 import math
-import os
 
 
 def plot_mesh(pts, clr="blue", title="Mesh", file="mesh.png"):
@@ -46,17 +45,12 @@ def plot_singular_values(vel, pts):
     singular_values = pod.singular_values
     normalized_singular_values = singular_values / torch.max(singular_values)
 
-    # Create the directory for saving the plot
-    img_dir = "/scratch/gcanali/ROM/img"
-    if not os.path.exists(img_dir):
-        os.makedirs(img_dir)
-
     # Plot the singular values
     plt.semilogy(normalized_singular_values, marker="o")
     plt.grid()
     plt.xlabel("Latent dimension")
     plt.ylabel("Singular value")
-    plt.savefig(f"{img_dir}/singular_values.png")
+    plt.savefig("test/singular_values.png")
 
     # Compute the POD modes
     modes = pod.basis.detach().cpu().numpy()
@@ -71,7 +65,7 @@ def plot_singular_values(vel, pts):
         plt.ylabel("y")
         plt.axis("equal")
         plt.tight_layout()
-        plt.savefig(f"{img_dir}/pod_mode_{i+1}.png")
+        plt.savefig(f"test/pod_mode_{i+1}.png")
 
 
 def plot_test(vel, pts, file):

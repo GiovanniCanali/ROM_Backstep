@@ -4,7 +4,6 @@
 POD_RANK=${1:-10}
 
 # Run the POD analysis
-echo
 echo -n "Running the POD analysis..."
 python src/pod.py --pod_rank "$POD_RANK"
 echo " done."
@@ -39,7 +38,7 @@ echo " done."
 echo "Running the tests:"
 
 # Loop through all directories matching the pattern
-for test_dir in test/*; do
+for test_dir in test/*_grid; do
 
     if [ -d "$test_dir" ]; then
         cd "$test_dir" || { echo "Failed to enter $test_dir"; exit 1; }
@@ -60,7 +59,7 @@ done
 
 # Run the test script
 echo -n "Running the test script..."
-python src/test.py > /dev/null 2>&1
+python src/test.py
 echo " done."
 
 # Print completion message
