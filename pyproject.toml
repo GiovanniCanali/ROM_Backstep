@@ -1,0 +1,21 @@
+# Choosing a build backend:
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+# Project information
+[project]
+name = "rom_backstep"
+version = "0.0.1"
+description = "Reduced-order modeling of the Navier-Stokes equations over a backward-facing step."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+authors = [{ name = "Giovanni Canali", email = "giovanni.canali98@yahoo.it" }]
+dynamic = ["dependencies"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["reference_simulation"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
