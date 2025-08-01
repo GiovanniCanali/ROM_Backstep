@@ -40,3 +40,8 @@ plt.ylabel("Relative error")
 plt.legend()
 plt.grid()
 plt.savefig("test/img/relative_error.png")
+
+# Print the errors
+print("Relative errors:")
+for rank, err_pod, err_pygem in zip(ranks, error_pod, error_pygem):
+    print(f"Rank {rank}: POD-RBF = {err_pod:.2e}, Pygem = {err_pygem:.2e}")
