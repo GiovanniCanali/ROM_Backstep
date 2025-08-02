@@ -12,10 +12,26 @@ def relative_error(vel_foam, vel_pygem, vel_pod):
     :return: The relative errors as a tuple.
     :rtype: tuple
     """
-    rel_error_pygem = np.abs(vel_pygem - vel_foam) / (np.abs(vel_foam) + 1e-13)
-    rel_error_pod = np.abs(vel_pod - vel_foam) / (np.abs(vel_foam) + 1e-13)
+    rel_error_pygem = np.abs(vel_pygem - vel_foam) / (np.abs(vel_foam) + 1e-8)
+    rel_error_pod = np.abs(vel_pod - vel_foam) / (np.abs(vel_foam) + 1e-8)
 
     return rel_error_pygem.mean(), rel_error_pod.mean()
+
+
+def mean_squared_error(vel_foam, vel_pygem, vel_pod):
+    """
+    Compute the Mean Squared Error (MSE) between predicted and target arrays.
+
+    :param np.ndarray vel_foam: Velocity magnitudes from OpenFOAM.
+    :param np.ndarray vel_pygem: Velocity magnitudes from PyGeM.
+    :param np.ndarray vel_pod: Velocity magnitudes from POD.
+    :return: The MSE as a tuple.
+    :rtype: tuple
+    """
+    mse_pygem = np.mean((vel_pygem - vel_foam) ** 2)
+    mse_pod = np.mean((vel_pod - vel_foam) ** 2)
+
+    return mse_pygem, mse_pod
 
 
 def split_by_label(vel, mesh, labels):

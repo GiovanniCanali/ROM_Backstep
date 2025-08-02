@@ -5,6 +5,7 @@ __all__ = [
     "get_mu",
     "get_test_data",
     "get_training_data",
+    "mean_squared_error",
     "mesh_to_numpy",
     "plot_mesh",
     "plot_singular_values",
@@ -17,7 +18,7 @@ __all__ = [
 
 from .plotter import plot_mesh, plot_singular_values, plot_test
 from .data import get_training_data, get_test_data, get_mu
-from .test_tools import relative_error, split_by_label
+from .test_tools import relative_error, split_by_label, mean_squared_error
 from .mesh import (
     mesh_to_numpy,
     setup_simulation,
