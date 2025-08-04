@@ -4,6 +4,9 @@ This repository contains the source code for the final project of the course
 _Computational Mechanics by ROM_, held at SISSA during the academic year
 2024 - 2025.
 
+The detailed report of the project, including the methodology, results, and
+discussion, can be found in [report.pdf](./report.pdf).
+
 ## Description
 
 This project focuses on building a reduced-order model (ROM) for simulating 2D
